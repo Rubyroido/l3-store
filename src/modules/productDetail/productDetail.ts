@@ -5,6 +5,7 @@ import { ProductData } from 'types';
 import html from './productDetail.tpl.html';
 import { cartService } from '../../services/cart.service';
 import { favoritesService } from '../../services/favorites.service';
+import { analyse } from '../../utils/analyse';
 
 class ProductDetail extends Component {
   more: ProductList;
@@ -41,10 +42,19 @@ class ProductDetail extends Component {
     if (isInCart) this._setInCart();
     if (isInFavorites) this.view.btnFav.innerHTML = '<svg class="svg-icon"><use href="#heart-filled"></use></svg>'
 
+    let statsType: string;
+    if (Object.keys(this.product.log).length !== 0) {
+      statsType = 'viewCardPromo'
+    } else {
+      statsType = 'viewCard'
+    }
+
     fetch(`/api/getProductSecretKey?id=${id}`)
       .then((res) => res.json())
       .then((secretKey) => {
         this.view.secretKey.setAttribute('content', secretKey);
+        console.log(this.product)
+        analyse(statsType,{product:this.product, secretKey})
       });
 
     fetch('/api/getPopularProducts')
@@ -59,6 +69,8 @@ class ProductDetail extends Component {
 
     cartService.addProduct(this.product);
     this._setInCart();
+
+    analyse('addToCard', this.product)
   }
 
   private _setInCart() {

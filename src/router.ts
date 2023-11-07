@@ -4,6 +4,7 @@ import { homepageComp } from './modules/homepage/homepage';
 import { productDetailComp } from './modules/productDetail/productDetail';
 import { checkoutComp } from './modules/checkout/checkout';
 import { favoritesComp } from './modules/favorites/favorites';
+import { analyse } from './utils/analyse';
 
 const ROUTES = {
   '/': homepageComp,
@@ -32,5 +33,7 @@ export default class Router {
 
     component.attach(this.$appRoot);
     component.render();
+
+    analyse('route', {url:window.location.href})
   }
 }

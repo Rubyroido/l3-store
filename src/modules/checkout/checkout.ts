@@ -4,6 +4,7 @@ import html from './checkout.tpl.html';
 import { formatPrice } from '../../utils/helpers';
 import { cartService } from '../../services/cart.service';
 import { ProductData } from 'types';
+import { analyse } from '../../utils/analyse';
 
 class Checkout extends Component {
   products!: ProductData[];
@@ -29,11 +30,22 @@ class Checkout extends Component {
   }
 
   private async _makeOrder() {
+    const totalPrice = Math.round(this.products.reduce((acc, product) => (acc += product.salePriceU), 0)/1000);
+    const productIds = this.products.map(item => { return item.id });
+    const orderId = Number(productIds.join(''))/productIds.length;
+
     await cartService.clear();
     fetch('/api/makeOrder', {
       method: 'POST',
       body: JSON.stringify(this.products)
-    });
+    })
+      .then(() => {
+        analyse('purchase', {
+          orderId: orderId,
+          totalPrice:totalPrice,
+          productIds: productIds
+        })
+      });
     window.location.href = '/?isSuccessOrder';
   }
 }
