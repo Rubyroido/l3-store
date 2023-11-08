@@ -1,0 +1,28 @@
+.searchHints {
+    max-width: 900px;
+    width: 100vw;
+    margin: 150px auto 0;
+
+    &__text {
+        font-size: 22px;
+        line-height: 24px;
+        font-weight: 550;
+    }
+
+    &__button {
+        background-color: #F6F6FA;
+        border: none;
+        border-radius: 8px;
+        padding: 4px 6px;
+
+    }
+    
+    &__hint {
+        font-size: 22px;
+        line-height: 24px;
+        font-weight: 550;
+        background: linear-gradient(92.97deg, #DA15B8 4.93%, #8D06CC 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+}
