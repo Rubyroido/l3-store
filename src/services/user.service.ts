@@ -3,16 +3,9 @@ import { genUUID } from '../utils/helpers';
 
 const ID_DB = '__wb-userId';
 
-declare global {
-  interface Window {
-    userId: any
-  }
-}
-
 class UserService {
   async init() {
     const id = await this.getId();
-    window.userId = id;
     console.warn('UserID: ', id);
   }
 
