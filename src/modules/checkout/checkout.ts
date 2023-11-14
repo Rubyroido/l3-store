@@ -40,11 +40,7 @@ class Checkout extends Component {
       body: JSON.stringify(this.products)
     })
       .then(() => {
-        analyse('purchase', {
-          orderId: orderId,
-          totalPrice:totalPrice,
-          productIds: productIds
-        })
+        analyse('purchase', {orderId, totalPrice, productIds})
       });
     window.location.href = '/?isSuccessOrder';
   }
